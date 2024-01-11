@@ -1,5 +1,6 @@
 #include <stdint-gcc.h>
 #include <iostream>
+#include "board.h"
 
 /**
  * @class ChessBoard
@@ -8,11 +9,7 @@
  * This class represents a chess board with the current state of the chess pieces.
  * It provides methods to initialize the board, print the board and retrieve the piece at a specific square.
  */
-class ChessBoard {
-
-public:
-
-    ChessBoard()
+ChessBoard::ChessBoard()
             : whitePawns(0x00FF000000000000), whiteKnights(0x4200000000000000), whiteBishops(0x2400000000000000),
               whiteRooks(0x8100000000000000), whiteQueens(0x0800000000000000), whiteKing(0x1000000000000000),
               blackPawns(0x000000000000FF00), blackKnights(0x0000000000000042), blackBishops(0x0000000000000024),
@@ -23,7 +20,7 @@ public:
         allPieces = whitePieces | blackPieces;
     }
 
-    ~ChessBoard() {
+    ChessBoard::~ChessBoard() {
     }
 
     /**
@@ -34,7 +31,7 @@ public:
      * and files from a to h. The black pieces are represented in lowercase and white pieces
      * in uppercase. An empty square is represented by a dot ('.').
      */
-    void printBoard() {
+    void ChessBoard::printBoard() {
         for (int rank = 7; rank >= 0; --rank) {
             for (int file = 0; file < 8; ++file) {
                 int square = rank * 8 + file; // finds the index of the square
@@ -45,28 +42,7 @@ public:
         }
     }
 
-private:
-    typedef uint64_t U64;
-
-    U64 whitePawns;
-    U64 whiteKnights;
-    U64 whiteBishops;
-    U64 whiteRooks;
-    U64 whiteQueens;
-    U64 whiteKing;
-
-    U64 blackPawns;
-    U64 blackKnights;
-    U64 blackBishops;
-    U64 blackRooks;
-    U64 blackQueens;
-    U64 blackKing;
-
-    U64 whitePieces;
-    U64 blackPieces;
-    U64 allPieces;
-
-    char getPieceAt(int square) const {
+    char ChessBoard::getPieceAt(int square) const {
         U64 mask = 1ULL << square; // shifts the 1 to the square we are looking for
         if (whitePawns & mask) return 'P'; // the code below well then see if there is a piece on the square
         if (whiteKnights & mask) return 'N';
@@ -82,8 +58,6 @@ private:
         if (blackKing & mask) return 'k';
         return '.';
     }
-};
-
 int main() {
     ChessBoard board;
     board.printBoard();
