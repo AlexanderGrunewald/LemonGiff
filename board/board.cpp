@@ -59,20 +59,17 @@ ChessBoard::ChessBoard()
         return '.';
     }
 
-
+    // we may want to change this so that it takes in a bitBoard as input for start/end
     void ChessBoard::setBitAt(int startSquare, int endSquare, char piece) {
         U64 startMask = 1ULL << startSquare;
         U64 endMask = 1ULL << endSquare;
 
-
         U64 &bitBoard = pieceMap[piece];
-        U64 movementNorth = Movement::moveNorth(startMask,1);
-        if (bitBoard & startMask){
-            bitBoard = bitBoard | movementNorth; // endMask
-            bitBoard = bitBoard & ~ startMask;
-            pieceMap[piece] = bitBoard;
-        }
 
+        if (bitBoard & startMask) {
+            bitBoard |= endMask;
+            bitBoard &= ~startMask;
+        }
     }
 
 
