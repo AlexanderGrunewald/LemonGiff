@@ -3,5 +3,7 @@
 //
 
 #include "chessRules.h"
+#include "board.h"
+
 
 
